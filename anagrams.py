@@ -6,6 +6,7 @@
     for an arbitrary list of strings.
 
 """
+__author__ = 'Bschues'
 import sys
 
 
@@ -35,20 +36,22 @@ def find_anagrams(words):
         {'dgo': ['dog'], 'act': ['cat', 'act']}
 
     """
-    anagrams = {
-        alphabetize(word): [
-            w for w in words
-            if alphabetize(w) == alphabetize(word)]
-        for word in words}
+    anagrams = {}
+    for w in words:
+        ordered = alphabetize(w)
+        if ordered in anagrams:
+            anagrams[ordered].append(w)
+        else:
+            anagrams[ordered] = [w]
     return anagrams
 
 
 if __name__ == "__main__":
     # run find anagrams of first argument
     if len(sys.argv) < 2:
-        print "Please specify a word file!"
+        print("Please specify a word file!")
         sys.exit(1)
     else:
         with open(sys.argv[1], 'r') as handle:
             words = handle.read().split()
-            print find_anagrams(words)
+            print(find_anagrams(words))
